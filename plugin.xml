@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+           id="org.betterlife.printermst"
+      version="0.1.0">
+    <name>MSTPrinter</name>
+    <description>Plugin for printing using bluetooth MST thermal printer</description>
+    <license>MIT</license>
+    <keywords>phonegap,printer</keywords>
+ 
+ 
+    <js-module src="www/MSTPrinter.js" name="MSTPrinter">
+        <clobbers target="window.MSTPrinter" />
+    </js-module>
+ 
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="MSTPrinter">
+                <param name="android-package" value="org.betterlife.printermstst.MSTPrinter"/>
+            </feature>
+        </config-file>
+ 
+        <source-file src="src/android/MSTPrinter.java" target-dir="src/org/betterlife/printermst" />
+        <source-file src="src/android/libs/printersdk.jar" target-dir="libs" />     
+     </platform>          
+</plugin>
