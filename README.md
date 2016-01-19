@@ -1,9 +1,9 @@
 MaestoPrinterPlugin
 ===================
 
-# Phonegap plugin for printing on Maesto printer from android app. This is tested on Printer model MST
+## Phonegap plugin for printing on Maesto printer from android app. This is tested on Printer model Meastro Script 57
 
-## Steps to use plugin
+### Steps to use plugin
 
 #### 1) Add plugin on your mobile application using plugin URL 
 ```javascript
