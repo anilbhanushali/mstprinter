@@ -19,11 +19,16 @@ import mmsl.DeviceUtility.DeviceCallBacks;
 public class MSTPrinter extends CordovaPlugin implements DeviceCallBacks {
 
     public static final String ACTION_CONNECT_PRINTER = "connect";
+    public static final String ACTION_STATUS_PRINTER = "getstatus";
     public static final String ACTION_PRINT_TEXT = "printtext";
+    public static final String ACTION_PRINT_LINEFEED = "setlinefeed";
+    public static final String ACTION_PRINTER_DISCONNECT = "disconnectprinters";
     private static BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     private static CallbackContext callbackContext;
     private static Boolean isConnected = false;
     private static String macaddress;
+    private static String printtext;
+    private static byte FontStyleVal;
 
     final DeviceBluetoothCommunication bluetoothCommunication =  new DeviceBluetoothCommunication();
 
@@ -51,7 +56,7 @@ public class MSTPrinter extends CordovaPlugin implements DeviceCallBacks {
             bluetoothCommunication.StartConnection(macid, this);
         }
 
-        if (ACTION_PRINT_TEXT.equals(action)) {
+        if (ACTION_STATUS_PRINTER.equals(action)) {
 
             try{
                 JSONObject arg_object;
@@ -62,19 +67,61 @@ public class MSTPrinter extends CordovaPlugin implements DeviceCallBacks {
                 callbackContext.error(e.getMessage());
             }
             if(isConnected){
-                String name = "Toshan Verma";
-                bluetoothCommunication.SendData(name.getBytes());
-                bluetoothCommunication.LineFeed();
-                bluetoothCommunication.LineFeed();
+                bluetoothCommunication.GetPrinterStatus();
+            }else{
+                callbackContext.error("Printer not connected");
+            };
+        }
+
+        if (ACTION_PRINT_TEXT.equals(action)) {
+
+            try{
+                JSONObject arg_object;
+                arg_object = args.getJSONObject(0);
+                macaddress = arg_object.getString("macaddress");
+                printtext = arg_object.getString("printtext");
+                setFontStyle(arg_object.getInt("fontStyle"));
+            }
+            catch (JSONException e){
+                callbackContext.error(e.getMessage());
+            }
+            if(isConnected){
+                bluetoothCommunication.setPrinterFont(FontStyleVal);
+                bluetoothCommunication.SendData(printtext.getBytes());
+            }else{
+                callbackContext.error("Printer not connected");
+            };
+        }
+
+        if (ACTION_PRINT_LINEFEED.equals(action)) {
+            if(isConnected){
                 bluetoothCommunication.LineFeed();
             }else{
                 callbackContext.error("Printer not connected");
             };
-
-
         }
+
+        if (ACTION_PRINTER_DISCONNECT.equals(action)) {
+            if(isConnected){
+                bluetoothCommunication.StopConnection();
+            }else{
+                callbackContext.error("Printer not connected");
+            };
+        }
+
         return true;
 
+    }
+
+    public void setFontStyle(Integer value) {
+        switch (value){
+            case 1:
+                FontStyleVal |= 0x08;
+                break;
+            default:
+                FontStyleVal &= 0xF7;
+                break;
+        }
     }
 
     @Override

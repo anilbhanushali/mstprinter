@@ -19,16 +19,16 @@ module.exports = {
             }]
         ); 
     },
-    clearPrinters: function(successCallback,errorCallback){
+    disconnectPrinters: function(successCallback,errorCallback){
         cordova.exec(
             successCallback,
             errorCallback,
             'MSTPrinter',
-            'clearprinters',
+            'disconnectprinters',
             []
         );
     },
-    showDeviceList: function(successCallback,errorCallback){
+    /*showDeviceList: function(successCallback,errorCallback){
         cordova.exec(
             successCallback,
             errorCallback,
@@ -36,7 +36,7 @@ module.exports = {
             'showdevicelist',
             []
         );
-    },
+    },*/
     setLineFeed : function(macaddress, successCallback,errorCallback){
         cordova.exec(
             successCallback, // success callback function
@@ -58,12 +58,12 @@ module.exports = {
                 "macaddress":macaddress,// and this array of custom arguments to create our entry
                 "printtext": printtext,
                 "fontAlignment":fontAlignment,
-                "fontStyle":fontStyle,
-                "fontSize":fontSize
+                "fontStyle":fontStyle,  //i.e. Bold
+                "fontSize":fontSize     //
             }]
         ); 
-    },
-    PrintImage : function(successCallback,errorCallback){
+    }/*,
+    /*PrintImage : function(successCallback,errorCallback){
         cordova.exec(
             successCallback, // success callback function
             errorCallback, // error callback function
@@ -71,9 +71,11 @@ module.exports = {
             'printimage', // with this action name
             []
         );
-    },
+    },*/
 
-    /*SetFontSize : function(textsize,successCallback,errorCallback){
+    /*
+    No need
+    SetFontSize : function(textsize,successCallback,errorCallback){
         cordova.exec(
             successCallback, // success callback function
             errorCallback, // error callback function
