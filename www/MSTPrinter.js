@@ -19,15 +19,6 @@ module.exports = {
             }]
         ); 
     },
-    showDeviceList: function(successCallback,errorCallback){
-        cordova.exec(
-            successCallback,
-            errorCallback,
-            'MSTPrinter',
-            'showdevicelist',
-            []
-        );
-    },
     clearPrinters: function(successCallback,errorCallback){
         cordova.exec(
             successCallback,
@@ -37,7 +28,52 @@ module.exports = {
             []
         );
     },
-    SetFontSize : function(textsize,successCallback,errorCallback){
+    showDeviceList: function(successCallback,errorCallback){
+        cordova.exec(
+            successCallback,
+            errorCallback,
+            'MSTPrinter',
+            'showdevicelist',
+            []
+        );
+    },
+    setLineFeed : function(macaddress, successCallback,errorCallback){
+        cordova.exec(
+            successCallback, // success callback function
+            errorCallback, // error callback function
+            'MSTPrinter', // mapped to our native Java class called "MSTPrinter"
+            'setlinefeed', // with this action name
+            [{   
+                "macaddress":macaddress,// and this array of custom arguments to create our entry
+            }]
+        ); 
+    },
+    PrintText : function(macaddress,printtext, fontAlignment, fontStyle, fontSize, successCallback, errorCallback){
+        cordova.exec(
+            successCallback, // success callback function
+            errorCallback, // error callback function
+            'MSTPrinter', // mapped to our native Java class called "MSTPrinter"
+            'printtext', // with this action name
+            [{   
+                "macaddress":macaddress,// and this array of custom arguments to create our entry
+                "printtext": printtext,
+                "fontAlignment":fontAlignment,
+                "fontStyle":fontStyle,
+                "fontSize":fontSize
+            }]
+        ); 
+    },
+    PrintImage : function(successCallback,errorCallback){
+        cordova.exec(
+            successCallback, // success callback function
+            errorCallback, // error callback function
+            'MSTPrinter', // mapped to our native Java class called "MSTPrinter"
+            'printimage', // with this action name
+            []
+        );
+    },
+
+    /*SetFontSize : function(textsize,successCallback,errorCallback){
         cordova.exec(
             successCallback, // success callback function
             errorCallback, // error callback function
@@ -59,18 +95,7 @@ module.exports = {
                 "attribute":attribute
             }]
         ); 
-    },
-    setLineFeed : function(macaddress, successCallback,errorCallback){
-        cordova.exec(
-            successCallback, // success callback function
-            errorCallback, // error callback function
-            'MSTPrinter', // mapped to our native Java class called "MSTPrinter"
-            'setlinefeed', // with this action name
-            [{   
-                "macaddress":macaddress,// and this array of custom arguments to create our entry
-            }]
-        ); 
-    },
+    },    
     setAlignment : function(macaddress, alignment, successCallback,errorCallback){
         cordova.exec(
             successCallback, // success callback function
@@ -80,21 +105,6 @@ module.exports = {
             [{   
                 "macaddress":macaddress,// and this array of custom arguments to create our entry
                 "alignment":alignment,
-            }]
-        ); 
-    },
-    PrintText : function(macaddress,text, alignment, attribute, textsize,successCallback,errorCallback){
-        cordova.exec(
-            successCallback, // success callback function
-            errorCallback, // error callback function
-            'MSTPrinter', // mapped to our native Java class called "MSTPrinter"
-            'printtext', // with this action name
-            [{   
-                "macaddress":macaddress,// and this array of custom arguments to create our entry
-                "text": text,
-                "alignment":alignment,
-                "attribute":attribute,
-                "textsize":textsize
             }]
         ); 
     },
@@ -108,14 +118,6 @@ module.exports = {
                 "file": file
             }]
         );
-    },
-    PrintImage : function(successCallback,errorCallback){
-        cordova.exec(
-            successCallback, // success callback function
-            errorCallback, // error callback function
-            'MSTPrinter', // mapped to our native Java class called "MSTPrinter"
-            'printimage', // with this action name
-            []
-        );
     }
+    */    
 };
